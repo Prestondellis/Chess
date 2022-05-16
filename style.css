@@ -1,0 +1,38 @@
+#board {
+    background-color: grey;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    border-style: solid;
+    border-color: grey;
+    
+}
+
+.squares {
+    background-color: white;
+    min-height: 75px;
+    min-width: 75px;
+    max-height: 75px;
+    max-width: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.green {
+    background-color: darkolivegreen;
+}
+
+.cream {
+    background-color: blanchedalmond;
+}
+
+.peice {
+    max-height: 85%;
+    max-width: 85%;
+}
+
+.none {
+    display: none;
+}
