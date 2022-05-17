@@ -82,6 +82,11 @@ const e8 = document.querySelector('#e8')
 const f8 = document.querySelector('#f8')
 const g8 = document.querySelector('#g8')
 const h8 = document.querySelector('#h8')
+const body = document.querySelector('#board')
+
+let moving = ''
+let movingSq = ''
+let turn = 'white'
 
 const board = [
     [a1, b1, c1, d1, e1, f1, g1, h1],
@@ -93,24 +98,383 @@ const board = [
     [a7, b7, c7, d7, e7, f7, g7, h7],
     [a8, b8, c8, d8, e8, f8, g8, h8], ]
 
+function unHighlight() {
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(board[i][j].src === 'http://127.0.0.1:5500/1x/cir.png'){
+                board[i][j].src = 'http://127.0.0.1:5500/1x/em.png'
+            }
+        }
+    }
+}
 
+//http://127.0.0.1:5500/1x/bR.png    
 function highlight(peice, square){
     console.log(peice)
     console.log(square)
     if(peice[1] === 'R'){
+        unHighlight()
         for(let i = 0; i < board.length; i++){
             for(let j = 0; j < board[i].length; j++){
                 console.log(board[i][j].id)
             }
         }
     }
+    
+    if(peice[1] === 'P' && peice[0] === 'b'){
+        unHighlight()
+        moving = peice
+        movingSq = square
+        for(let i = 0; i < board.length; i++){
+            for(let j = 0; j < board[i].length; j++){
+                if(board[i][j].id == square){
+                    board[i + 1][j].src = 'http://127.0.0.1:5500/1x/cir.png'
+                    if(i === 1){
+                        board[i + 2][j].src = 'http://127.0.0.1:5500/1x/cir.png'
+                    }
+                } 
+            }
+        }
+    }
+
+    if(peice[1] === 'm') unHighlight()
+
+    if(peice[1] === 'i'){
+        for(let i = 0; i < board.length; i++){
+            for(let j = 0; j < board[i].length; j++){
+                if(square === board[i][j].id){
+                    for(let x = 0; x < board.length; x++){
+                        for(let y = 0; y < board.length; y++){
+                            if(movingSq === board[x][y].id){
+                                board[i][j].src = board[x][y].src
+                                board[x][y].src = 'http://127.0.0.1:5500/1x/em.png'
+                                unHighlight()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-a1.addEventListener('click', function() {
+a1.addEventListener('click', function(){
     let peice = this.src.split('/')
     highlight(peice[peice.length - 1], this.id)
+    
 })
-
+b1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h1.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
 a2.addEventListener('click', function(){
-    findpeice(this)
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h2.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h3.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h4.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h5.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h6.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h7.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+a8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+b8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+c8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+d8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+e8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+f8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+g8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
+})
+h8.addEventListener('click', function(){
+    let peice = this.src.split('/')
+    highlight(peice[peice.length - 1], this.id)
+    
 })
