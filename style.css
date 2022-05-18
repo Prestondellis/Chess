@@ -36,3 +36,9 @@
 .none {
     display: none;
 }
+
+.take {
+    border-color: tomato;
+    border-style: solid;
+    border-radius: 10px;
+}
