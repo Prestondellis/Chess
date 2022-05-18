@@ -84,9 +84,19 @@ const g8 = document.querySelector('#g8')
 const h8 = document.querySelector('#h8')
 const body = document.querySelector('#board')
 
+const em = 'http://127.0.0.1:5500/1x/Em.png';
+const cir = 'http://127.0.0.1:5500/1x/cir.png';
+const bP = 'http://127.0.0.1:5500/1x/bP.png';
+const bR = 'http://127.0.0.1:5500/1x/bR.png';
+const bH = 'http://127.0.0.1:5500/1x/bH.png';
+const bB = 'http://127.0.0.1:5500/1x/bB.png';
+const bQ = 'http://127.0.0.1:5500/1x/bQ.png';
+const bK = 'http://127.0.0.1:5500/1x/bK.png';
+
 let moving = ''
 let movingSq = ''
-let turn = 'white'
+let turn = 'w'
+
 
 const board = [
     [a1, b1, c1, d1, e1, f1, g1, h1],
@@ -101,8 +111,29 @@ const board = [
 function unHighlight() {
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++){
-            if(board[i][j].src === 'http://127.0.0.1:5500/1x/cir.png'){
-                board[i][j].src = 'http://127.0.0.1:5500/1x/em.png'
+            board[i][j].classList.remove('take')
+            if(board[i][j].src === cir){
+                board[i][j].src = em
+            }
+        }
+    }
+}
+
+
+function take(square){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(square === board[i][j].id && board[i][j].classList.contains('take')){
+                for(let x = 0; x < board.length; x++){
+                    for(let y = 0; y < board.length; y++){
+                        if(movingSq === board[x][y].id){
+                            board[i][j].src = board[x][y].src
+                            board[x][y].src = em
+                            unHighlight()
+                            turn === 'w' ? turn = 'b' : turn = 'w'
+                        }
+                    }
+                }
             }
         }
     }
@@ -110,10 +141,11 @@ function unHighlight() {
 
 //http://127.0.0.1:5500/1x/bR.png    
 function highlight(peice, square){
-    console.log(peice)
-    console.log(square)
     if(peice[1] === 'R'){
+        take(square)
         unHighlight()
+        moving = peice
+        movingSq = square
         for(let i = 0; i < board.length; i++){
             for(let j = 0; j < board[i].length; j++){
                 console.log(board[i][j].id)
@@ -122,19 +154,61 @@ function highlight(peice, square){
     }
     
     if(peice[1] === 'P' && peice[0] === 'b'){
+        take(square)
         unHighlight()
         moving = peice
         movingSq = square
-        for(let i = 0; i < board.length; i++){
-            for(let j = 0; j < board[i].length; j++){
-                if(board[i][j].id == square){
-                    board[i + 1][j].src = 'http://127.0.0.1:5500/1x/cir.png'
-                    if(i === 1){
-                        board[i + 2][j].src = 'http://127.0.0.1:5500/1x/cir.png'
+        if(turn === 'b'){
+            for(let i = 0; i < board.length; i++){
+                for(let j = 0; j < board[i].length; j++){
+                    if(board[i][j].id == square && !board[i][j].classList.contains('take')){
+                        if(board[i + 1][j].src === em && board[i][j].src === bP){
+                            board[i + 1][j].src = cir
+                            if(i === 1 && board[i + 2][j].src == em){
+                                board[i + 2][j].src = cir
+                            }
+                        } 
+                        if(board[i][j].id == square){
+                            if(board[i+1][j+1].src[25] === 'w'){
+                                board[i+1][j+1].classList.add('take')
+                            }
+                            if(board[i+1][j-1].src[25] === 'w'){
+                                board[i+1][j-1].classList.add('take')
+                            }
+                        }
+                    }  
+                }
+            }
+        } 
+    }
+    if(peice[1] === 'P' && peice[0] === 'w'){
+        take(square)
+        unHighlight()
+        moving = peice
+        movingSq = square
+        if(turn === 'w'){
+            for(let i = 0; i < board.length; i++){
+                for(let j = 0; j < board[i].length; j++){
+                    if(board[i][j].id == square && !board[i][j].classList.contains('take')){
+                        if(board[i - 1][j].src === em){
+                            board[i - 1][j].src = cir
+                            if(i === 6 && board[i - 2][j].src == em){
+                                board[i - 2][j].src = cir
+                            }
+                        } 
+                        if(board[i][j].id == square){
+                            if(board[i-1][j+1].src[25] === 'b'){
+                                board[i-1][j+1].classList.add('take')
+                            }
+                            if(board[i-1][j-1].src[25] === 'b'){
+                                board[i-1][j-1].classList.add('take')
+                            }
+                        }
                     }
-                } 
+                }
             }
         }
+        
     }
 
     if(peice[1] === 'm') unHighlight()
@@ -147,8 +221,9 @@ function highlight(peice, square){
                         for(let y = 0; y < board.length; y++){
                             if(movingSq === board[x][y].id){
                                 board[i][j].src = board[x][y].src
-                                board[x][y].src = 'http://127.0.0.1:5500/1x/em.png'
+                                board[x][y].src = em
                                 unHighlight()
+                                turn === 'w' ? turn = 'b' : turn = 'w'
                             }
                         }
                     }
