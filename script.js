@@ -92,6 +92,8 @@ const bH = 'http://127.0.0.1:5500/1x/bH.png';
 const bB = 'http://127.0.0.1:5500/1x/bB.png';
 const bQ = 'http://127.0.0.1:5500/1x/bQ.png';
 const bK = 'http://127.0.0.1:5500/1x/bK.png';
+const wP = 'http://127.0.0.1:5500/1x/wP.png';
+const wR = 'http://127.0.0.1:5500/1x/wR.png';
 
 let moving = ''
 let movingSq = ''
@@ -148,11 +150,45 @@ function highlight(peice, square){
         movingSq = square
         for(let i = 0; i < board.length; i++){
             for(let j = 0; j < board[i].length; j++){
-                console.log(board[i][j].id)
+                if(board[i][j].id == square && board[i][j].src === wR && turn === 'w'){
+                    for(let x = i; x < 7; x++){
+                        if(board[x+1][j].src != em) x = 7
+                        else board[x+1][j].src = cir
+                    }    
+                    for(let y = i; y > 0; y--){                       
+                        if(board[y-1][j].src != em) y = 0
+                        else board[y-1][j].src = cir                        
+                    }
+                    for(let z = j; z < 7; z++){
+                        if(board[i][z+1].src != em) z = 7
+                        else board[i][z+1].src = cir 
+                    }
+                    for(let h = j; h > 0; h++){
+                        if(board[i][h-1].src != em) h = 0
+                        else board[i][h-1].src = cir 
+                    }
+                }
+                if(board[i][j].id == square && board[i][j].src === bR && turn === 'b'){
+                    for(let x = i; x < 7; x++){
+                        if(board[x+1][j].src != em) x = 7
+                        else board[x+1][j].src = cir
+                    }    
+                    for(let y = i; y > 0; y--){                       
+                        if(board[y-1][j].src != em) y = 0
+                        else board[y-1][j].src = cir                        
+                    }
+                    for(let z = j; z < 7; z++){
+                        if(board[i][z+1].src != em) z = 7
+                        else board[i][z+1].src = cir 
+                    }
+                    for(let h = j; h > 0; h++){
+                        if(board[i][h-1].src != em) h = 0
+                        else board[i][h-1].src = cir 
+                    }
+                }
             }
         }
-    }
-    
+    }    
     if(peice[1] === 'P' && peice[0] === 'b'){
         take(square)
         unHighlight()
@@ -190,7 +226,7 @@ function highlight(peice, square){
             for(let i = 0; i < board.length; i++){
                 for(let j = 0; j < board[i].length; j++){
                     if(board[i][j].id == square && !board[i][j].classList.contains('take')){
-                        if(board[i - 1][j].src === em){
+                        if(board[i - 1][j].src === em && board[i][j].src === wP){
                             board[i - 1][j].src = cir
                             if(i === 6 && board[i - 2][j].src == em){
                                 board[i - 2][j].src = cir
@@ -200,9 +236,11 @@ function highlight(peice, square){
                             if(board[i-1][j+1].src[25] === 'b'){
                                 board[i-1][j+1].classList.add('take')
                             }
-                            if(board[i-1][j-1].src[25] === 'b'){
-                                board[i-1][j-1].classList.add('take')
-                            }
+                            if(j > 0){
+                                if(board[i-1][j-1].src[25] === 'b'){
+                                    board[i-1][j-1].classList.add('take')
+                                }
+                            } 
                         }
                     }
                 }
@@ -223,13 +261,13 @@ function highlight(peice, square){
                                 board[i][j].src = board[x][y].src
                                 board[x][y].src = em
                                 unHighlight()
-                                turn === 'w' ? turn = 'b' : turn = 'w'
                             }
                         }
                     }
                 }
             }
         }
+        turn === 'w' ? turn = 'b' : turn = 'w'
     }
 }
 
