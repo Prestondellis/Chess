@@ -163,27 +163,48 @@ function highlight(peice, square){
                         if(board[i][z+1].src != em) z = 7
                         else board[i][z+1].src = cir 
                     }
-                    for(let h = j; h > 0; h++){
+                    for(let h = j; h > 0; h--){
                         if(board[i][h-1].src != em) h = 0
                         else board[i][h-1].src = cir 
                     }
                 }
                 if(board[i][j].id == square && board[i][j].src === bR && turn === 'b'){
                     for(let x = i; x < 7; x++){
-                        if(board[x+1][j].src != em) x = 7
+                        if(board[x+1][j].src != em) {
+                            x = 7
+                            if(board[x+1][j].src[25] === 'w') {
+                                board[x+1][j].classList.add('take')
+                            }
+                        }
                         else board[x+1][j].src = cir
                     }    
                     for(let y = i; y > 0; y--){                       
-                        if(board[y-1][j].src != em) y = 0
-                        else board[y-1][j].src = cir                        
+                        if(board[y-1][j].src != em) {
+                            y = 0
+                            if(board[y-1][j].src[25] === 'w') {
+                                board[y-1][j].classList.add('take')
+                            }
+                        }
+                        else board[y-1][j].src = cir                     
                     }
                     for(let z = j; z < 7; z++){
-                        if(board[i][z+1].src != em) z = 7
-                        else board[i][z+1].src = cir 
+                        if(board[i][z+1].src != em) {
+                            z = 7
+                            if(board[i][z+1].src[25] === 'w') {
+                                board[i][z+1].classList.add('take')
+                            }
+                        } 
+                        else board[i][z+1].src = cir
+
                     }
-                    for(let h = j; h > 0; h++){
-                        if(board[i][h-1].src != em) h = 0
-                        else board[i][h-1].src = cir 
+                    for(let h = j; h > 0; h--){
+                        if(board[i][h-1].src != em){
+                            h = 0
+                            if(board[i][h-1].src[25] === 'w') {
+                                board[i][h-1].classList.add('take')
+                            }
+                        } 
+                        else board[i][h-1].src = cir
                     }
                 }
             }
