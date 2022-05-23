@@ -94,6 +94,10 @@ const bQ = 'http://127.0.0.1:5500/1x/bQ.png';
 const bK = 'http://127.0.0.1:5500/1x/bK.png';
 const wP = 'http://127.0.0.1:5500/1x/wP.png';
 const wR = 'http://127.0.0.1:5500/1x/wR.png';
+const wB = 'http://127.0.0.1:5500/1x/wB.png';
+const wH = 'http://127.0.0.1:5500/1x/wH.png';
+const wQ = 'http://127.0.0.1:5500/1x/wQ.png';
+
 
 let moving = ''
 let movingSq = ''
@@ -121,6 +125,14 @@ function unHighlight() {
     }
 }
 
+function safe(square){
+  for (let i = 0; i < board.length; i++){
+    for (let j = 0; j < board.length; j++){
+      if(board[i][j] == square){
+      }
+    }
+  }
+}
 
 function take(square){
     for(let i = 0; i < board.length; i++){
@@ -143,66 +155,521 @@ function take(square){
 
 //http://127.0.0.1:5500/1x/bR.png    
 function highlight(peice, square){
-    if(peice[1] === 'R'){
-        take(square)
-        unHighlight()
-        moving = peice
-        movingSq = square
-        for(let i = 0; i < board.length; i++){
-            for(let j = 0; j < board[i].length; j++){
-                if(board[i][j].id == square && board[i][j].src === wR && turn === 'w'){
-                    for(let x = i; x < 7; x++){
-                        if(board[x+1][j].src != em) x = 7
-                        else board[x+1][j].src = cir
-                    }    
-                    for(let y = i; y > 0; y--){                       
-                        if(board[y-1][j].src != em) y = 0
-                        else board[y-1][j].src = cir                        
-                    }
-                    for(let z = j; z < 7; z++){
-                        if(board[i][z+1].src != em) z = 7
-                        else board[i][z+1].src = cir 
-                    }
-                    for(let h = j; h > 0; h--){
-                        if(board[i][h-1].src != em) h = 0
-                        else board[i][h-1].src = cir 
-                    }
+  if(peice[1] === 'Q'){
+    take(square) 
+    unHighlight()
+    moving = peice
+    movingSq = square
+    for (let i = 0; i < board.length; i++){
+      for (let j = 0; j < board.length; j++){
+        if(board[i][j].id == square && board[i][j].src === wQ && turn === 'w'){
+          for (let x = 1; x < 9; x++){
+            if(i-x >= 0 && j+x < 8){
+              if(board[i-x][j+x] && board[i-x][j+x].src === em){
+                board[i-x][j+x].src = cir;
+              } else {
+                if(board[i-x][j+x].src[25] === 'b'){
+                  board[i-x][j+x].classList.add('take')
+                }  
+                x = 9;
+              }
+            }
+          }
+          for (let y = 1; y < 9; y++){
+            if(i-y >= 0 && j-y >= 0){
+              if(board[i-y][j-y] && board[i-y][j-y].src === em){
+                board[i-y][j-y].src = cir;
+              } else {
+                if(board[i-y][j-y].src[25] === 'b'){
+                  board[i-y][j-y].classList.add('take')
                 }
-                if(board[i][j].id == square && board[i][j].src === bR && turn === 'b'){
-                    for(let x = i; x < 7; x++){
-                        if(board[x+1][j].src != em) {
-                            x = 7
-                            if(board[x+1][j].src[25] === 'w') {
-                                board[x+1][j].classList.add('take')
-                            }
-                        }
-                        else board[x+1][j].src = cir
-                    }    
+                y = 9;
+              }
+            }
+          }
+          for (let z = 1; z<9; z++){
+            if(i+z <= 7 && j+z <= 7){
+              if(board[i+z][j+z] && board[i+z][j+z].src === em){
+                board[i+z][j+z].src = cir;
+              } else {
+                if(board[i+z][j+z].src[25] === 'b'){
+                  board[i+z][j+z].classList.add('take')
+                }
+                z = 9;
+              }
+            }
+          }
+          for (let o = 1; o<9; o++){ 
+            if(i+o <= 7 && j-o >= 0){
+              if(board[i+o][j-o] && board[i+o][j-o].src === em){
+                board[i+o][j-o].src = cir;
+              } else {
+                if(board[i+o][j-o].src[25] === 'b'){
+                  board[i+o][j-o].classList.add('take')
+                }
+                o = 9;
+              }
+            }
+          }
+          for(let x = i; x < 7; x++){
+            if(board[x+1][j].src != em) {
+              if(board[x+1][j].src[25] === 'b') {
+                console.log('true')
+                board[x+1][j].classList.add('take')
+              } 
+              x = 7
+              }
+              else board[x+1][j].src = cir
+          }    
+          for(let y = i; y > 0; y--){                       
+            if(board[y-1][j].src != em) {
+              if(board[y-1][j].src[25] === 'b') {
+                 board[y-1][j].classList.add('take')
+              }
+              y = 0
+            }
+            else board[y-1][j].src = cir                     
+          }
+          for(let z = j; z < 7; z++){
+            if(board[i][z+1].src != em) {
+              if(board[i][z+1].src[25] === 'b') {
+                board[i][z+1].classList.add('take')
+              }
+              z = 7
+            } 
+            else board[i][z+1].src = cir
+          }
+          for(let h = j; h > 0; h--){
+            if(board[i][h-1].src != em){
+              if(board[i][h-1].src[25] === 'b') {
+                board[i][h-1].classList.add('take')
+              }
+              h = 0
+            } 
+            else board[i][h-1].src = cir
+          }              
+        }
+        if(board[i][j].id == square && board[i][j].src === bQ && turn === 'b'){
+          for (let x = 1; x < 9; x++){
+            if(i-x >= 0 && j+x < 8){
+              if(board[i-x][j+x] && board[i-x][j+x].src === em){
+                board[i-x][j+x].src = cir;
+              } else {
+                if(board[i-x][j+x].src[25] === 'w'){
+                  board[i-x][j+x].classList.add('take')
+                }  
+                x = 9;
+              }
+            }
+          }
+          for (let y = 1; y < 9; y++){
+            if(i-y >= 0 && j-y >= 0){
+              if(board[i-y][j-y] && board[i-y][j-y].src === em){
+                board[i-y][j-y].src = cir;
+              } else {
+                if(board[i-y][j-y].src[25] === 'w'){
+                  board[i-y][j-y].classList.add('take')
+                }
+                y = 9;
+              }
+            }
+          }
+          for (let z = 1; z<9; z++){
+            if(i+z <= 7 && j+z <= 7){
+              if(board[i+z][j+z] && board[i+z][j+z].src === em){
+                board[i+z][j+z].src = cir;
+              } else {
+                if(board[i+z][j+z].src[25] === 'w'){
+                  board[i+z][j+z].classList.add('take')
+                }
+                z = 9;
+              }
+            }
+          }
+          for (let o = 1; o<9; o++){ 
+            if(i+o <= 7 && j-o >= 0){
+              if(board[i+o][j-o] && board[i+o][j-o].src === em){
+                board[i+o][j-o].src = cir;
+              } else {
+                if(board[i+o][j-o].src[25] === 'w'){
+                  board[i+o][j-o].classList.add('take')
+                }
+                o = 9;
+              }
+            }
+          }
+          for(let x = i; x < 7; x++){
+            if(board[x+1][j].src != em) {
+              if(board[x+1][j].src[25] === 'w') {
+                console.log('true')
+                board[x+1][j].classList.add('take')
+              } 
+              x = 7
+              }
+              else board[x+1][j].src = cir
+          }    
+          for(let y = i; y > 0; y--){                       
+            if(board[y-1][j].src != em) {
+              if(board[y-1][j].src[25] === 'w') {
+                 board[y-1][j].classList.add('take')
+              }
+              y = 0
+            }
+            else board[y-1][j].src = cir                     
+          }
+          for(let z = j; z < 7; z++){
+            if(board[i][z+1].src != em) {
+              if(board[i][z+1].src[25] === 'w') {
+                board[i][z+1].classList.add('take')
+              }
+              z = 7
+            } 
+            else board[i][z+1].src = cir
+          }
+          for(let h = j; h > 0; h--){
+            if(board[i][h-1].src != em){
+              if(board[i][h-1].src[25] === 'w') {
+                board[i][h-1].classList.add('take')
+              }
+              h = 0
+            } 
+            else board[i][h-1].src = cir
+          }              
+        }
+      }
+    }
+  }
+  if(peice[1] === 'H'){
+    take(square)
+    unHighlight()
+    moving = peice
+    movingSq = square
+    for (let i = 0; i < board.length; i++){
+      for (let j = 0; j < board.length; j++){
+        if(board[i][j].id == square && board[i][j].src === wH && turn === 'w'){
+          if(i < 6 && j > 0){
+            if(board[i+2][j-1].src === em){
+              board[i+2][j-1].src = cir
+            } else if(board[i+2][j-1].src[25] === 'b'){
+              board[i+2][j-1].classList.add('take')
+            }    
+          }
+          if(i < 6 && j < 7){
+            if(board[i+2][j+1].src === em){
+              board[i+2][j+1].src = cir
+            } else if(board[i+2][j+1].src[25] === 'b'){
+              board[i+2][j+1].classList.add('take')
+            }
+          }
+          if(i > 1 && j > 0){
+            if(board[i-2][j-1].src === em){
+              board[i-2][j-1].src = cir
+            } else if(board[i-2][j-1].src[25] === 'b'){
+              board[i-2][j-1].classList.add('take')
+            }
+          }
+          if(i > 1 && j < 7){
+            if(board[i-2][j+1].src === em){
+              board[i-2][j+1].src = cir
+            } else if(board[i-2][j+1].src[25] === 'b'){
+              board[i-2][j+1].classList.add('take')
+            }
+          }
+          if(i > 0 && j < 6){
+            if(board[i-1][j+2].src === em){
+              board[i-1][j+2].src = cir
+            } else if(board[i-1][j+2].src[25] === 'b'){
+              board[i-1][j+2].classList.add('take')
+            }
+          }
+          if(i < 7 && j < 6){
+            if(board[i+1][j+2].src === em){
+              board[i+1][j+2].src = cir
+            } else if(board[i+1][j+2].src[25] === 'b'){
+              board[i+1][j+2].classList.add('take')
+            }
+          }
+          if(i > 0 && j > 1){
+            if(board[i-1][j-2].src === em){
+              board[i-1][j-2].src = cir
+            } else if(board[i-1][j-2].src[25] === 'b'){
+              board[i-1][j-2].classList.add('take')
+            }
+          }
+          if(i > 0 && j < 6){
+            if(board[i-1][j+2].src === em){
+              board[i-1][j+2].src = cir
+            } else if(board[i-1][j+2].src[25] === 'b'){
+              board[i-1][j+2].classList.add('take')
+            }
+          }
+          if(i < 7 && j < 6){
+            if(board[i+1][j-2].src === em){
+              board[i+1][j-2].src = cir
+            } else if(board[i+1][j-2].src[25] === 'b'){
+              board[i+1][j-2].classList.add('take')
+            }
+          }
+        }
+        if(board[i][j].id == square && board[i][j].src === bH && turn === 'b'){
+          if(i < 6 && j > 0){
+            if(board[i+2][j-1].src === em){
+              board[i+2][j-1].src = cir
+            } else if(board[i+2][j-1].src[25] === 'w'){
+              board[i+2][j-1].classList.add('take')
+            }    
+          }
+          if(i < 6 && j < 7){
+            if(board[i+2][j+1].src === em){
+              board[i+2][j+1].src = cir
+            } else if(board[i+2][j+1].src[25] === 'w'){
+              board[i+2][j+1].classList.add('take')
+            }
+          }
+          if(i > 1 && j > 0){
+            if(board[i-2][j-1].src === em){
+              board[i-2][j-1].src = cir
+            } else if(board[i-2][j-1].src[25] === 'w'){
+              board[i-2][j-1].classList.add('take')
+            }
+          }
+          if(i > 1 && j < 7){
+            if(board[i-2][j+1].src === em){
+              board[i-2][j+1].src = cir
+            } else if(board[i-2][j+1].src[25] === 'w'){
+              board[i-2][j+1].classList.add('take')
+            }
+          }
+          if(i > 0 && j < 6){
+            if(board[i-1][j+2].src === em){
+              board[i-1][j+2].src = cir
+            } else if(board[i-1][j+2].src[25] === 'w'){
+              board[i-1][j+2].classList.add('take')
+            }
+          }
+          if(i < 7 && j < 6){
+            if(board[i+1][j+2].src === em){
+              board[i+1][j+2].src = cir
+            } else if(board[i+1][j+2].src[25] === 'w'){
+              board[i+1][j+2].classList.add('take')
+            }
+          }
+          if(i > 0 && j > 1){
+            if(board[i-1][j-2].src === em){
+              board[i-1][j-2].src = cir
+            } else if(board[i-1][j-2].src[25] === 'w'){
+              board[i-1][j-2].classList.add('take')
+            }
+          }
+          if(i > 0 && j < 6){
+            if(board[i-1][j+2].src === em){
+              board[i-1][j+2].src = cir
+            } else if(board[i-1][j+2].src[25] === 'w'){
+              board[i-1][j+2].classList.add('take')
+            }
+          }
+          if(i < 7 && j > 1){
+            if(board[i+1][j-2].src === em){
+              board[i+1][j-2].src = cir
+            } else if(board[i+1][j-2].src[25] === 'w'){
+              board[i+1][j-2].classList.add('take')
+            }
+          }
+        }
+      }
+    }
+  }
+  if(peice[1] === 'B'){
+    take(square)
+    unHighlight()
+    moving = peice
+    movingSq = square
+    for (let i = 0; i < board.length; i++){
+      for (let j = 0; j < board.length; j++){
+        if(board[i][j].id == square && board[i][j].src === wB && turn === 'w'){
+          for (let x = 1; x < 9; x++){
+            if(i-x >= 0 && j+x < 8){
+              if(board[i-x][j+x] && board[i-x][j+x].src === em){
+                board[i-x][j+x].src = cir;
+              } else {
+                if(board[i-x][j+x].src[25] === 'b'){
+                  board[i-x][j+x].classList.add('take')
+                }  
+                x = 9;
+              }
+            }
+          }
+          for (let y = 1; y < 9; y++){
+            if(i-y >= 0 && j-y >= 0){
+              if(board[i-y][j-y] && board[i-y][j-y].src === em){
+                board[i-y][j-y].src = cir;
+              } else {
+                if(board[i-y][j-y].src[25] === 'b'){
+                  board[i-y][j-y].classList.add('take')
+                }
+                y = 9;
+              }
+            }
+          }
+          for (let z = 1; z<9; z++){
+            if(i+z <= 7 && j+z <= 7){
+              if(board[i+z][j+z] && board[i+z][j+z].src === em){
+                board[i+z][j+z].src = cir;
+              } else {
+                if(board[i+z][j+z].src[25] === 'b'){
+                  board[i+z][j+z].classList.add('take')
+                }
+                z = 9;
+              }
+            }
+          }
+          for (let o = 1; o<9; o++){ 
+            if(i+o <= 7 && j-o >= 0){
+              if(board[i+o][j-o] && board[i+o][j-o].src === em){
+                board[i+o][j-o].src = cir;
+              } else {
+                if(board[i+o][j-o].src[25] === 'b'){
+                  board[i+o][j-o].classList.add('take')
+                }
+                o = 9;
+              }
+            }
+          }
+        }    
+        if(board[i][j].id == square && board[i][j].src === bB && turn === 'b'){
+          for (let x = 1; x < 9; x++){
+            if(i-x >= 0 && j+x < 9){
+              if(board[i-x][j+x] && board[i-x][j+x].src === em){
+                board[i-x][j+x].src = cir;
+              } else {
+                if(board[i-x][j+x].src[25] === 'w'){
+                  board[i-x][j+x].classList.add('take')
+                }  
+                x = 9;
+              }
+            }
+          }
+          for (let y = 1; y < 9; y++){
+            if(i-y >= 0 && j-y >= 0){
+              if(board[i-y][j-y] && board[i-y][j-y].src === em){
+                board[i-y][j-y].src = cir;
+              } else {
+                if(board[i-y][j-y].src[25] === 'w'){
+                  board[i-y][j-y].classList.add('take')
+                }
+                y = 9;
+              }
+            }
+          }
+          for (let z = 1; z<9; z++){
+            if(i+z <= 7 && j+z <= 7){
+              if(board[i+z][j+z] && board[i+z][j+z].src === em){
+                board[i+z][j+z].src = cir;
+              } else {
+                if(board[i+z][j+z].src[25] === 'w'){
+                  board[i+z][j+z].classList.add('take')
+                }
+                z = 9;
+              }
+            }
+          }
+          for (let o = 1; o<9; o++){ 
+            if(i+o <= 7 && j-o >= 0){
+              if(board[i+o][j-o] && board[i+o][j-o].src === em){
+                board[i+o][j-o].src = cir;
+              } else {
+                if(board[i+o][j-o].src[25] === 'w'){
+                  board[i+o][j-o].classList.add('take')
+                }
+                o = 9;
+              }
+            }
+          }        
+        }
+      }
+    }
+  }  
+  if(peice[1] === 'R'){
+    take(square)
+    unHighlight()
+    moving = peice
+    movingSq = square
+    for(let i = 0; i < board.length; i++){
+      for(let j = 0; j < board[i].length; j++){
+        if(board[i][j].id == square && board[i][j].src === wR && turn === 'w'){
+          for(let x = i; x < 7; x++){
+            if(board[x+1][j].src != em) {
+              if(board[x+1][j].src[25] === 'b') {
+                console.log('true')
+                board[x+1][j].classList.add('take')
+              } 
+              x = 7
+              }
+              else board[x+1][j].src = cir
+          }    
                     for(let y = i; y > 0; y--){                       
                         if(board[y-1][j].src != em) {
-                            y = 0
-                            if(board[y-1][j].src[25] === 'w') {
+                            if(board[y-1][j].src[25] === 'b') {
                                 board[y-1][j].classList.add('take')
                             }
+                            y = 0
                         }
                         else board[y-1][j].src = cir                     
                     }
                     for(let z = j; z < 7; z++){
                         if(board[i][z+1].src != em) {
+                            if(board[i][z+1].src[25] === 'b') {
+                                board[i][z+1].classList.add('take')
+                            }
                             z = 7
+                        } 
+                        else board[i][z+1].src = cir
+                    }
+                    for(let h = j; h > 0; h--){
+                        if(board[i][h-1].src != em){
+                            if(board[i][h-1].src[25] === 'b') {
+                                board[i][h-1].classList.add('take')
+                            }
+                            h = 0
+                        } 
+                        else board[i][h-1].src = cir
+                    }
+                }
+                if(board[i][j].id == square && board[i][j].src === bR && turn === 'b'){
+                    for(let x = i; x < 7; x++){
+                        if(board[x+1][j].src != em) {
+                            if(board[x+1][j].src[25] === 'w') {
+                                board[x+1][j].classList.add('take')
+                            } 
+                            x = 7
+                        }
+                        else board[x+1][j].src = cir
+                    }    
+                    for(let y = i; y > 0; y--){                       
+                        if(board[y-1][j].src != em) {
+                            if(board[y-1][j].src[25] === 'w') {
+                                board[y-1][j].classList.add('take')
+                            }
+                            y = 0
+                        }
+                        else board[y-1][j].src = cir                     
+                    }
+                    for(let z = j; z < 7; z++){
+                        if(board[i][z+1].src != em) {
                             if(board[i][z+1].src[25] === 'w') {
                                 board[i][z+1].classList.add('take')
                             }
+                            z = 7
                         } 
                         else board[i][z+1].src = cir
 
                     }
                     for(let h = j; h > 0; h--){
                         if(board[i][h-1].src != em){
-                            h = 0
                             if(board[i][h-1].src[25] === 'w') {
                                 board[i][h-1].classList.add('take')
                             }
+                            h = 0
                         } 
                         else board[i][h-1].src = cir
                     }
@@ -292,323 +759,11 @@ function highlight(peice, square){
     }
 }
 
-a1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h1.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h2.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h3.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h4.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h5.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h6.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h7.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-a8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-b8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-c8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-d8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-e8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-f8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-g8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
-h8.addEventListener('click', function(){
-    let peice = this.src.split('/')
-    highlight(peice[peice.length - 1], this.id)
-    
-})
+for(let i = 0; i < board.length; i++){
+    for(let j = 0; j < board[i].length; j++){
+        board[i][j].addEventListener('click', function(){
+            let peice = this.src.split('/')
+            highlight(peice[peice.length - 1], this.id)
+        })
+    }
+}
