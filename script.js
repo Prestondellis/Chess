@@ -118,7 +118,7 @@ const board = [
     [a8, b8, c8, d8, e8, f8, g8, h8], ]
 
 const board2 = board
-
+console.log(safe(board[7][4]))
 
 function diagnol(i, j){
 
@@ -139,6 +139,51 @@ function safe(square){
   for (let i = 0; i < board.length; i++){
     for (let j = 0; j < board.length; j++){
       if(board[i][j] == square && board[i][j].src === wK){
+              if(i < 6 && j > 0){
+                if(board[i+2][j-1].src === bH){
+                  return false
+                }    
+              }
+              if(i < 6 && j < 7){
+                if(board[i+2][j+1].src === bH){
+                  return false
+                } 
+              }
+              if(i > 1 && j > 0){
+                if(board[i-2][j-1].src === bH){
+                  return false
+                } 
+              }
+              if(i > 1 && j < 7){
+                if(board[i-2][j+1].src === bH){
+                  return false
+                } 
+              }
+              if(i > 0 && j < 6){
+                if(board[i-1][j+2].src === bH){
+                  return false
+                } 
+              }
+              if(i < 7 && j < 6){
+                if(board[i+1][j+2].src === bH){
+                  return false
+                } 
+              }
+              if(i > 0 && j > 1){
+                if(board[i-1][j-2].src === bH){
+                  return false
+                } 
+              }
+              if(i > 0 && j < 6){
+                if(board[i-1][j+2].src === bH){
+                  return false
+                }
+              }
+              if(i < 7 && j < 6){
+                if(board[i+1][j-2].src === bH){
+                  return false
+                } 
+              }
             for (let x = 1; x < 9; x++){
               if(i-x >= 0 && j+x < 8){
                 if(board[i-x][j+x] && board[i-x][j+x].src === em){
@@ -185,7 +230,7 @@ function safe(square){
             }
             for(let x = i; x < 7; x++){
               if(board[x+1][j].src != em) {
-                if(board[x+1][j].src[25] === bR) {
+                if(board[x+1][j].src[25] === bR || board[x+1][j].src[25] === bQ) {
                   return false
                 } 
                 x = 7
@@ -193,7 +238,7 @@ function safe(square){
             }    
             for(let y = i; y > 0; y--){                       
               if(board[y-1][j].src != em) {
-                if(board[y-1][j].src === bR) {
+                if(board[y-1][j].src === bR || board[y-1][j].src === bQ) {
                    return false
                 }
                 y = 0
@@ -201,7 +246,7 @@ function safe(square){
             }
             for(let z = j; z < 7; z++){
               if(board[i][z+1].src != em) {
-                if(board[i][z+1].src === bR) {
+                if(board[i][z+1].src === bR || board[i][z+1].src === bQ) {
                   return false
                 }
                 z = 7
@@ -209,7 +254,7 @@ function safe(square){
             }
             for(let h = j; h > 0; h--){
               if(board[i][h-1].src != em){
-                if(board[i][h-1].src === bR) {
+                if(board[i][h-1].src === bR || board[i][h-1].src === bQ) {
                   return false
                 }
                 h = 0
@@ -256,6 +301,51 @@ function safe(square){
               }
             }
             if(board[i][j] == square && board[i][j].src === bK){
+              if(i < 6 && j > 0){
+                if(board[i+2][j-1].src === wH){
+                  return false
+                }    
+              }
+              if(i < 6 && j < 7){
+                if(board[i+2][j+1].src === wH){
+                  return false
+                } 
+              }
+              if(i > 1 && j > 0){
+                if(board[i-2][j-1].src === wH){
+                  return false
+                } 
+              }
+              if(i > 1 && j < 7){
+                if(board[i-2][j+1].src === wH){
+                  return false
+                } 
+              }
+              if(i > 0 && j < 6){
+                if(board[i-1][j+2].src === wH){
+                  return false
+                } 
+              }
+              if(i < 7 && j < 6){
+                if(board[i+1][j+2].src === wH){
+                  return false
+                } 
+              }
+              if(i > 0 && j > 1){
+                if(board[i-1][j-2].src === wH){
+                  return false
+                } 
+              }
+              if(i > 0 && j < 6){
+                if(board[i-1][j+2].src === wH){
+                  return false
+                }
+              }
+              if(i < 7 && j < 6){
+                if(board[i+1][j-2].src === wH){
+                  return false
+                } 
+              }
               for (let x = 1; x < 9; x++){
                 if(i-x >= 0 && j+x < 8){
                   if(board[i-x][j+x] && board[i-x][j+x].src === em){
@@ -387,22 +477,31 @@ function take(square){
                 for(let x = 0; x < board.length; x++){
                     for(let y = 0; y < board.length; y++){
                         if(movingSq === board[x][y].id){
+                          let taken = board[i][j].src
                           if(turn === 'w'){
                             board[i][j].src = board[x][y].src
                             board[x][y].src = em
                             unHighlight()
                             for(let q = 0; q < board.length; q++){
                               for(let w = 0; w < board[q].length; w++){
-                                if(safe(board[q][w]) === false && board[q][w].src === bK){
-                                  check = true
-                                } else check = false
-                                if(safe(board[q][w]) === false && board[q][w].src === wK){
-                                  turn === 'w' ? turn = 'b' : turn = 'w'
-                                  board[x][y].src = board[i][j].src
-                                  board[i][j].src = em
+                                if(board[q][w].src === bK){
+                                  if(safe(board[q][w]) === false){
+                                    check = true                                    
+                                  } else {
+                                    check = false
+                                  }
+                                } 
+                                if(board[q][w].src === wK){
+                                  if(safe(board[q][w]) === false){
+                                    message.textContent = 'Your king would be exposed!'
+                                    board[x][y].src = board[i][j].src
+                                    board[i][j].src = taken
+                                    turn === 'w' ? turn = 'b' : turn = 'w'
+                                  }
                                 }
                               }
                             }
+                            turn === 'w' ? turn = 'b' : turn = 'w'
                           }
                           if(turn === 'b'){
                             board[i][j].src = board[x][y].src
@@ -412,17 +511,22 @@ function take(square){
                               for(let w = 0; w < board[q].length; w++){
                                 if(safe(board[q][w]) === false && board[q][w].src === wK){
                                   check = true
-                                } else check = false
-                                if(safe(board[q][w]) === false && board[q][w].src === bK){
                                   turn === 'w' ? turn = 'b' : turn = 'w'
+                                } else {
+                                  check = false
+                                  turn === 'w' ? turn = 'b' : turn = 'w'
+                                } 
+                                if(safe(board[q][w]) === false && board[q][w].src === bK){
                                   board[x][y].src = board[i][j].src
-                                  board[i][j].src = em
+                                  board[i][j].src = taken
+                                  turn === 'w' ? turn = 'b' : turn = 'w'
+                                  message.textContent = 'Your king would be exposed!'
                                 }
                               }
                             }
+                            turn === 'w' ? turn = 'b' : turn = 'w'
                           }
                             check ? message.textContent = 'Check' : message.textContent = ''
-                            turn === 'w' ? turn = 'b' : turn = 'w'
                         }
                     }
                 }
@@ -1030,7 +1134,6 @@ function highlight(peice, square){
                         }
                     }
                     if(board[i][j].id == square && board[i][j].src === wP && turn === 'w'){
-                      console.log('pon')
                       if(board[i - 1][j].src === em && board[i][j].src === wP){
                         board[i - 1][j].src = cir
                         if(i === 6 && board[i - 2][j].src == em){
