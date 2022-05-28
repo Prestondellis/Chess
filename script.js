@@ -117,12 +117,6 @@ const board = [
     [a7, b7, c7, d7, e7, f7, g7, h7],
     [a8, b8, c8, d8, e8, f8, g8, h8], ]
 
-const board2 = board
-console.log(safe(board[7][4]))
-
-function diagnol(i, j){
-
-}
 
 function unHighlight() {
     for(let i = 0; i < board.length; i++){
@@ -300,6 +294,7 @@ function safe(square){
                 return false
               }
             }
+          }
             if(board[i][j] == square && board[i][j].src === bK){
               if(i < 6 && j > 0){
                 if(board[i+2][j-1].src === wH){
@@ -346,124 +341,124 @@ function safe(square){
                   return false
                 } 
               }
-              for (let x = 1; x < 9; x++){
-                if(i-x >= 0 && j+x < 8){
-                  if(board[i-x][j+x] && board[i-x][j+x].src === em){
-                  } else {
-                    if(board[i-x][j+x].src === wB || board[i-x][j+x].src === wQ){
-                      return false
-                    }  
-                    x = 9;
-                  }
-                }
-              }
-              for (let y = 1; y < 9; y++){
-                if(i-y >= 0 && j-y >= 0){
-                  if(board[i-y][j-y] && board[i-y][j-y].src === em){
-                  } else {
-                    if(board[i-y][j-y].src === wB || board[i-y][j-y].src === wQ){
-                      return false
-                    }
-                    y = 9;
-                  }
-                }
-              }
-              for (let z = 1; z<9; z++){
-                if(i+z <= 7 && j+z <= 7){
-                  if(board[i+z][j+z] && board[i+z][j+z].src === em){
-                  } else {
-                    if(board[i+z][j+z].src === wB || board[i+z][j+z].src === wQ){
-                      return false
-                    }
-                    z = 9;
-                  }
-                }
-              }
-              for (let o = 1; o<9; o++){ 
-                if(i+o <= 7 && j-o >= 0){
-                  if(board[i+o][j-o] && board[i+o][j-o].src === em){
-                  } else {
-                    if(board[i+o][j-o].src === wB || board[i+o][j-o].src === wQ){
-                      return false
-                    }
-                    o = 9;
-                  }
-                }
-              }
-              for(let x = i; x < 7; x++){
-                if(board[x+1][j].src != em) {
-                  if(board[x+1][j].src[25] === wR) {
+            for (let x = 1; x < 9; x++){
+              if(i-x >= 0 && j+x < 8){
+                if(board[i-x][j+x] && board[i-x][j+x].src === em){
+                } else {
+                  if(board[i-x][j+x].src === wB || board[i-x][j+x].src === wQ){
                     return false
-                  } 
-                  x = 7
-                }
-              }    
-              for(let y = i; y > 0; y--){                       
-                if(board[y-1][j].src != em) {
-                  if(board[y-1][j].src === wR) {
-                     return false
-                  }
-                  y = 0
-                }                    
-              }
-              for(let z = j; z < 7; z++){
-                if(board[i][z+1].src != em) {
-                  if(board[i][z+1].src === wR) {
-                    return false
-                  }
-                  z = 7
-                } 
-              }
-              for(let h = j; h > 0; h--){
-                if(board[i][h-1].src != em){
-                  if(board[i][h-1].src === wR) {
-                    return false
-                  }
-                  h = 0
-                } 
-              }
-              if(i < 7){
-                if(board[i+1][j].src === wK){
-                  return false
-                }
-              }
-              if(i < 7 && j < 7){
-                if(board[i+1][j+1].src === wK){
-                  return false
-                }
-              }
-              if(j > 0 && i < 7){
-                if(board[i+1][j-1].src === wK){
-                  return false
-                }
-              }
-              if(i > 0){
-                if(board[i-1][j].src === wK){
-                  return false
-                }
-              }
-              if(j > 0){
-                if(board[i][j-1].src === wK){
-                  return false
-                }
-              }
-              if(j < 7){
-                if(board[i][j+1].src === wK){
-                  return false
-                }
-              }
-              if(i>0 && j>0){
-                if(board[i-1][j-1].src === wK || board[i-1][j-1].src === wP){
-                  return false 
-                }
-              }
-              if(i>0 && j<7){
-                if(board[i-1][j+1].src === wK || board[i-1][j+1].src === wP){
-                  return false
+                  }  
+                  x = 9;
                 }
               }
             }
-                             
+            for (let y = 1; y < 9; y++){
+              if(i-y >= 0 && j-y >= 0){
+                if(board[i-y][j-y] && board[i-y][j-y].src === em){
+                } else {
+                  if(board[i-y][j-y].src === wB || board[i-y][j-y].src === wQ){
+                    return false
+                  }
+                  y = 9;
+                }
+              }
+            }
+            for (let z = 1; z<9; z++){
+              if(i+z <= 7 && j+z <= 7){
+                if(board[i+z][j+z] && board[i+z][j+z].src === em){
+                } else {
+                  if(board[i+z][j+z].src === wB || board[i+z][j+z].src === wQ){
+                    return false
+                  }
+                  z = 9;
+                }
+              }
+            }
+            for (let o = 1; o<9; o++){ 
+              if(i+o <= 7 && j-o >= 0){
+                if(board[i+o][j-o] && board[i+o][j-o].src === em){
+                } else {
+                  if(board[i+o][j-o].src === wB || board[i+o][j-o].src === wQ){
+                    return false
+                  }
+                  o = 9;
+                }
+              }
+            }
+            for(let x = i; x < 7; x++){
+              if(board[x+1][j].src != em) {
+                if(board[x+1][j].src[25] === wR || board[x+1][j].src[25] === wQ) {
+                  return false
+                } 
+                x = 7
+              }
+            }    
+            for(let y = i; y > 0; y--){                       
+              if(board[y-1][j].src != em) {
+                if(board[y-1][j].src === wR || board[y-1][j].src === wQ) {
+                   return false
+                }
+                y = 0
+              }                    
+            }
+            for(let z = j; z < 7; z++){
+              if(board[i][z+1].src != em) {
+                if(board[i][z+1].src === wR || board[i][z+1].src === wQ) {
+                  return false
+                }
+                z = 7
+              } 
+            }
+            for(let h = j; h > 0; h--){
+              if(board[i][h-1].src != em){
+                if(board[i][h-1].src === wR || board[i][h-1].src === wQ) {
+                  return false
+                }
+                h = 0
+              } 
+            }
+            if(i < 7){
+              if(board[i+1][j].src === wK){
+                return false
+              }
+            }
+            if(i < 7 && j < 7){
+              if(board[i+1][j+1].src === wK || board[i+1][j+1].src === wP){
+                return false
+              }
+            }
+            if(j > 0 && i < 7){
+              if(board[i+1][j-1].src === wK || board[i+1][j-1].src === wP){
+                return false
+              }
+            }
+            if(i > 0){
+              if(board[i-1][j].src === wK){
+                return false
+              }
+            }
+            if(j > 0){
+              if(board[i][j-1].src === wK){
+                return false
+              }
+            }
+            if(j < 7){
+              if(board[i][j+1].src === wK){
+                return false
+              }
+            }
+            if(i>0 && j>0){
+              if(board[i-1][j-1].src === wK || board[i-1][j-1].src === wP){
+                return false 
+              }
+            }
+            if(i>0 && j<7){
+              if(board[i-1][j+1].src === wK || board[i-1][j+1].src === wP){
+                return false
+              }
+            }
+            
+                           
       }
     }
   }
@@ -486,13 +481,15 @@ function take(square){
                               for(let w = 0; w < board[q].length; w++){
                                 if(board[q][w].src === bK){
                                   if(safe(board[q][w]) === false){
-                                    check = true                                    
+                                    check = true
+                                    message.textContent = 'Check'                                    
                                   } else {
                                     check = false
                                   }
                                 } 
                                 if(board[q][w].src === wK){
                                   if(safe(board[q][w]) === false){
+                                    console.log(true)
                                     message.textContent = 'Your king would be exposed!'
                                     board[x][y].src = board[i][j].src
                                     board[i][j].src = taken
@@ -501,7 +498,8 @@ function take(square){
                                 }
                               }
                             }
-                            turn === 'w' ? turn = 'b' : turn = 'w'
+                            turn === 'w' ? turn = 'b' : turn = 'w' 
+                            break
                           }
                           if(turn === 'b'){
                             board[i][j].src = board[x][y].src
@@ -509,24 +507,29 @@ function take(square){
                             unHighlight()
                             for(let q = 0; q < board.length; q++){
                               for(let w = 0; w < board[q].length; w++){
-                                if(safe(board[q][w]) === false && board[q][w].src === wK){
-                                  check = true
-                                  turn === 'w' ? turn = 'b' : turn = 'w'
-                                } else {
-                                  check = false
-                                  turn === 'w' ? turn = 'b' : turn = 'w'
+                                if(board[q][w].src === wK){
+                                  if(safe(board[q][w]) === false){
+                                    check = true
+                                    message.textContent = 'Check'                                    
+                                  } else {
+                                    check = false
+                                  }
                                 } 
-                                if(safe(board[q][w]) === false && board[q][w].src === bK){
-                                  board[x][y].src = board[i][j].src
-                                  board[i][j].src = taken
-                                  turn === 'w' ? turn = 'b' : turn = 'w'
-                                  message.textContent = 'Your king would be exposed!'
+                                if(board[q][w].src === bK){
+                                  if(safe(board[q][w]) === false){
+                                    console.log(true)
+                                    message.textContent = 'Your king would be exposed!'
+                                    board[x][y].src = board[i][j].src
+                                    board[i][j].src = taken
+                                    turn === 'w' ? turn = 'b' : turn = 'w'
+                                  }
                                 }
                               }
                             }
-                            turn === 'w' ? turn = 'b' : turn = 'w'
+                            turn === 'w' ? turn = 'b' : turn = 'w' 
+                            break
                           }
-                            check ? message.textContent = 'Check' : message.textContent = ''
+                            message.textContent = 'Check' 
                         }
                     }
                 }
@@ -971,7 +974,7 @@ function highlight(peice, square){
         }    
         if(board[i][j].id == square && board[i][j].src === bB && turn === 'b'){
           for (let x = 1; x < 9; x++){
-            if(i-x >= 0 && j+x < 9){
+            if(i-x >= 0 && j+x < 8){
               if(board[i-x][j+x] && board[i-x][j+x].src === em){
                 board[i-x][j+x].src = cir;
               } else {
@@ -1125,12 +1128,16 @@ function highlight(peice, square){
                             }
                         } 
                         if(board[i][j].id == square){
+                          if(j < 7){
                             if(board[i+1][j+1].src[25] === 'w'){
-                                board[i+1][j+1].classList.add('take')
+                              board[i+1][j+1].classList.add('take')
                             }
+                          }
+                          if(j > 0){
                             if(board[i+1][j-1].src[25] === 'w'){
-                                board[i+1][j-1].classList.add('take')
+                              board[i+1][j-1].classList.add('take')
                             }
+                          }  
                         }
                     }
                     if(board[i][j].id == square && board[i][j].src === wP && turn === 'w'){
@@ -1139,11 +1146,13 @@ function highlight(peice, square){
                         if(i === 6 && board[i - 2][j].src == em){
                             board[i - 2][j].src = cir
                         }
-                      } 
+                      }
                       if(board[i][j].id == square){
-                        if(board[i-1][j+1].src[25] === 'b'){
-                            board[i-1][j+1].classList.add('take')
-                        }
+                        if(j < 7){
+                          if(board[i-1][j+1].src[25] === 'b'){
+                              board[i-1][j+1].classList.add('take')
+                          }
+                      }
                         if(j > 0){
                             if(board[i-1][j-1].src[25] === 'b'){
                                 board[i-1][j-1].classList.add('take')
@@ -1158,7 +1167,7 @@ function highlight(peice, square){
 
     if(peice[1] === 'm') unHighlight()
 
-    if(peice[1] === 'i'){
+    if(peice[1] === 'i' && turn === 'w'){
         for(let i = 0; i < board.length; i++){
             for(let j = 0; j < board[i].length; j++){
                 if(square === board[i][j].id){
@@ -1175,38 +1184,21 @@ function highlight(peice, square){
                                       if (board[u][m].src === bK){
                                         if(safe(board[u][m]) === false){
                                           check = true
+                                          console.log('this one')
                                         } else check = false
                                       }
                                     }
                                   }
                                   if(safe(board[l][k]) === false){
+                                    console.log(false)
                                     turn === 'w' ? turn = 'b' : turn = 'w'
                                     board[x][y].src = board[i][j].src
                                     board[i][j].src = em
+                                    break
                                   }
                                 }                               
                               }
-                                if(board[l][k].src === bK && turn === 'b'){
-                                  if(movingSq === board[x][y].id){
-                                    board[i][j].src = board[x][y].src
-                                    board[x][y].src = em
-                                    for(let u = 0; u < board.length; u++){
-                                      for (let m = 0; m < board[u].length; m++){
-                                        if (board[u][m].src === wK){
-                                          if(safe(board[u][m]) === false){
-                                            check = true
-                                          } else check = false
-                                        }
-                                      }
-                                    }
-                                    if(safe(board[l][k]) === false){
-                                      turn === 'w' ? turn = 'b' : turn = 'w'
-                                      board[x][y].src = board[i][j].src
-                                      board[i][j].src = em
-                                    }
-                                  }                               
-                                }
-                              }
+                              turn === 'w' ? turn = 'b' : turn = 'w'
                               unHighlight()
                             }
                         }
@@ -1215,8 +1207,52 @@ function highlight(peice, square){
             }
         }
         turn === 'w' ? turn = 'b' : turn = 'w'
-        check ? message.textContent = 'Check' : message.textContent = ''
+        check ? message.textContent = 'Check' : message.textContent = turn
     }
+  } 
+  if(peice[1] === 'i' && turn === 'b'){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            if(square === board[i][j].id){
+                for(let x = 0; x < board.length; x++){
+                    for(let y = 0; y < board.length; y++){
+                      for(let l = 0; l < board.length; l++){
+                        for(let k = 0; k < board[l].length; k++){
+                          if(board[l][k].src === bK && turn === 'b'){
+                            if(movingSq === board[x][y].id){
+                              board[i][j].src = board[x][y].src
+                              board[x][y].src = em
+                              for(let u = 0; u < board.length; u++){
+                                for (let m = 0; m < board[u].length; m++){
+                                  if (board[u][m].src === wK){
+                                    if(safe(board[u][m]) === false){
+                                      check = true
+                                      console.log('this one')
+                                    } else check = false
+                                  }
+                                }
+                              }
+                              if(safe(board[l][k]) === false){
+                                console.log(false)
+                                turn === 'w' ? turn = 'b' : turn = 'w'
+                                board[x][y].src = board[i][j].src
+                                board[i][j].src = em
+                                break
+                              }
+                            }                               
+                          }
+                          unHighlight()
+                          turn === 'w' ? turn = 'b' : turn = 'w'
+                        }
+                    }
+                }
+            }
+        }
+    }
+    turn === 'w' ? turn = 'b' : turn = 'w'
+    check ? message.textContent = 'Check' : message.textContent = turn
+}
+} 
 }
 
 for(let i = 0; i < board.length; i++){
