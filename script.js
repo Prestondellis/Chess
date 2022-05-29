@@ -561,9 +561,14 @@ function highlight(peice, square){
     for (let i = 0; i < board.length; i++){
       for (let j = 0; j < board.length; j++){
         if(board[i][j].id == square && board[i][j].src === wK && turn === 'w'){
-          if(ke8){
-            if(d1.src === em && c1.src === em && b1.src === em && ra1){
-              c1.src = cir
+          if(ke8 && safe(board[i][j]) && safe(d8)){
+            if(d8.src === em && c8.src === em && b8.src === em && ra8){
+              c8.src = cir
+            }
+          }
+          if(ke8 && safe(board[i][j]) && safe(f8)){
+            if(f8.src === em && g8.src === em && rh8){
+              g8.src = cir
             }
           }
           if(i < 7){
@@ -624,9 +629,14 @@ function highlight(peice, square){
           }
         }
         if(board[i][j].id == square && board[i][j].src === bK && turn === 'b'){
-          if(ke1){
+          if(ke1 && safe(board[i][j])){
             if(d1.src === em && c1.src === em && b1.src === em && ra1){
               c1.src = cir
+            }
+          }
+          if(ke1 && safe(board[i][j])){
+            if(f1.src === em && g1.src === em && rh1){
+              g1.src = cir
             }
           }
           if(i < 7){
@@ -1294,7 +1304,6 @@ function highlight(peice, square){
                                     break
                                   }
                                   if(safe(board[l][k]) === false){
-                                    console.log(false)
                                     turn === 'w' ? turn = 'b' : turn = 'w'
                                     board[x][y].src = board[i][j].src
                                     board[i][j].src = em
@@ -1302,6 +1311,9 @@ function highlight(peice, square){
                                   } else if(ke8 && board[x][y] === e8 && board[i][j] === c8){
                                     d8.src = wR 
                                     a8.src = em
+                                  } else if(ke8 && board[x][y] === e8 && board[i][j] === g8){
+                                    f8.src = wR 
+                                    h8.src = em
                                   }
                                 }                     
                               }
@@ -1355,6 +1367,9 @@ function highlight(peice, square){
                               } else if(ke1 && board[x][y] === e1 && board[i][j] === c1){
                                 d1.src = bR 
                                 a1.src = em
+                              } else if(ke1 && board[x][y] === e1 && board[i][j] === g1){
+                                f1.src = bR 
+                                h1.src = em
                               }
                             }                             
                           }
