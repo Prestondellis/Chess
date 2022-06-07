@@ -201,7 +201,7 @@ function safe(square){
               return false
             }
           }
-          if(i < 7 && j < 6){
+          if(i < 7 && j > 1){
             if(board[i+1][j-2].src === bH){
               return false
             } 
@@ -365,7 +365,7 @@ function safe(square){
               return false
             }
           }
-          if(i < 7 && j < 6){
+          if(i < 7 && j > 1){
             if(board[i+1][j-2].src === bH){
               return false
             } 
@@ -530,7 +530,7 @@ function safe(square){
               return false
             }
           }
-          if(i < 7 && j < 6){
+          if(i < 7 && j > 1){
             if(board[i+1][j-2].src === wH){
               return false
             } 
@@ -581,7 +581,7 @@ function safe(square){
         }
         for(let x = i; x < 7; x++){
           if(board[x+1][j].src != em) {
-            if(board[x+1][j].src[25] === wR || board[x+1][j].src === wQ) {
+            if(board[x+1][j].src === wR || board[x+1][j].src === wQ) {
               return false
             } 
             x = 7
@@ -695,7 +695,7 @@ function safe(square){
             return false
           }
         }
-        if(i < 7 && j < 6){
+        if(i < 7 && j > 1){
           if(board[i+1][j-2].src === wH){
             return false
           } 
@@ -1298,7 +1298,7 @@ function highlight(peice, square){
               board[i-1][j+2].classList.add('take')
             }
           }
-          if(i < 7 && j < 6){
+          if(i < 7 && j > 1){
             if(board[i+1][j-2].src === em){
               board[i+1][j-2].src = cir
             } else if(board[i+1][j-2].src[25] === 'b'){
@@ -1649,21 +1649,21 @@ function highlight(peice, square){
                                   }
                                   let reverse = true
                                   console.log(safe(board[i][j]))
-                                  if(board[i][j].src === wK && safe(board[x][y]) === false){
+                                  if(board[i][j].src === wK && safe(board[i][j]) === false){
                                     turn === 'w' ? turn = 'b' : turn = 'w'
                                     board[x][y].src = board[i][j].src
                                     board[i][j].src = em
-                                    console.log(true)
+                                    message.textContent = 'Your King would be exposed!'
                                     reverse = false
                                     break
                                   }
-                                  if(safe(board[l][k]) === false && reverse){
-                                    turn === 'w' ? turn = 'b' : turn = 'w'
-                                    console.log(true)
-                                    board[x][y].src = board[i][j].src
-                                    board[i][j].src = em
-                                    break
-                                  } else if(ke8 && board[x][y] === e8 && board[i][j] === c8){                                  console.log(true)
+                                   if(safe(board[l][k]) === false && board[i][j].src !== wK){
+                                     turn === 'w' ? turn = 'b' : turn = 'w'
+                                     message.textContent = 'Your King would be exposed!'
+                                     board[x][y].src = board[i][j].src
+                                     board[i][j].src = em
+                                     break
+                                   } else if(ke8 && board[x][y] === e8 && board[i][j] === c8){                                  console.log(true)
                                     console.log(true)
                                     d8.src = wR 
                                     a8.src = em
@@ -1705,27 +1705,23 @@ function highlight(peice, square){
                                   }
                                   unHighlight()
                                 } 
-                                let reverse = true
+
                                 if(board[i][j].src === bK && safe(board[i][j]) === false){
-                                  console.log(true)
-                                  turn === 'w' ? turn = 'b' : turn = 'w'
-                                  board[x][y].src = board[i][j].src
-                                  board[i][j].src = em
-                                  reverse = false
-                                  break
-                                }
-                                if(safe(board[l][k]) === false && reverse){
-                                  console.log(true)
+                                  message.textContent = 'Your King would be exposed!'
                                   turn === 'w' ? turn = 'b' : turn = 'w'
                                   board[x][y].src = board[i][j].src
                                   board[i][j].src = em
                                   break
-                                } else if(ke1 && board[x][y] === e1 && board[i][j] === c1){
-                                  console.log(true)
+                                }else if (safe(board[l][k]) === false && board[i][j].src !== bK){
+                                   message.textContent = 'Your King would be exposed!'
+                                  turn === 'w' ? turn = 'b' : turn = 'w'
+                                   board[x][y].src = board[i][j].src
+                                   board[i][j].src = em
+                                   break
+                                 } else if(ke1 && board[x][y] === e1 && board[i][j] === c1){
                                   d1.src = bR 
                                   a1.src = em
                                 } else if(ke1 && board[x][y] === e1 && board[i][j] === g1){
-                                  console.log(true)
                                   f1.src = bR 
                                   h1.src = em
                                 }
@@ -1744,63 +1740,19 @@ function highlight(peice, square){
     checkMessage()
     endMove = false
   } 
-//   if(peice[1] === 'i' && turn === 'b' && endMove){
-//     if(turn === 'b'){
-//     for(let i = 0; i < board.length; i++){
-//         for(let j = 0; j < board[i].length; j++){
-//             if(square === board[i][j].id){
-//                 for(let x = 0; x < board.length; x++){
-//                     for(let y = 0; y < board.length; y++){
-//                       if(movingSq === board[x][y].id){
-//                       for(let l = 0; l < board.length; l++){
-//                         for(let k = 0; k < board[l].length; k++){
-//                           if(board[l][k].src === bK && turn === 'b' && endMove){
-//                               board[i][j].src = board[x][y].src
-//                               board[x][y].src = em
-//                               endMove = false
-//                               for(let u = 0; u < board.length; u++){
-//                                 for (let m = 0; m < board[u].length; m++){
-//                                   if (board[u][m].src === bK){
-//                                     if(safe(board[u][m]) === false){
-//                                       check = true
-//                                     } else check = false
-//                                   }
-//                                 }
-//                               }
-//                               if(board[i][j].src === bK && safe(board[i][j]) === false){
-//                                 console.log(false)
-//                                 turn === 'w' ? turn = 'b' : turn = 'w'
-//                                 board[x][y].src = board[i][j].src
-//                                 board[i][j].src = em
-//                                 break
-//                               }
-//                               if(safe(board[l][k]) === false){
-//                                 board[x][y].src = board[i][j].src
-//                                 board[i][j].src = em
-//                                 break
-//                               } else if(ke1 && board[x][y] === e1 && board[i][j] === c1){
-//                                 d1.src = wR 
-//                                 a1.src = em
-//                               } else if(ke1 && board[x][y] === e1 && board[i][j] === g1){
-//                                 f1.src = wR 
-//                                 h1.src = em
-//                               }
-//                             }                     
-//                           }
-//                           unHighlight()
-//                         }
-//                     } 
-//                 }
-//             }
-//         }
-//       }
-//     }  
-// }
-// turn === 'w' ? turn = 'b' : turn = 'w'
-// check ? message.textContent = 'Check' : message.textContent = turn
-// endMove = false
-// }  
 }
+
+
+
+document.querySelector('#whiteOrBlack').addEventListener('change', function() {
+  if(this.checked) {
+    document.querySelector('#board').style.flexWrap = 'wrap-reverse'
+    document.querySelector('#pieces').textContent = 'Black'
+  } else {
+    document.querySelector('#board').style.flexWrap = 'wrap'
+    document.querySelector('#pieces').textContent = 'White'
+  }
+})
 
 for(let i = 0; i < board.length; i++){
     for(let j = 0; j < board[i].length; j++){
